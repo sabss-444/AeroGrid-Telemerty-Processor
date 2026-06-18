@@ -1,0 +1,85 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TelemetryProcessor {
+
+    public static void main(String[] args) {
+        String csvFile = "telemetry_data.csv";
+        Map<String, TurbineTracker> turbineMap = new HashMap<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            boolean isHeader = true;
+            int lineNumber = 0;
+
+            while ((line = br.readLine()) != null) {
+                lineNumber++;
+
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
+
+                String[] columns = line.split(",");
+                if (columns.length < 5) {
+                    System.err.println("Skipping line " + lineNumber + " (too few columns): " + line);
+                    continue;
+                }
+
+                try {
+                    String turbineId = columns[1].trim();
+                    double temperature = Double.parseDouble(columns[2].trim());
+                    double vibration = Double.parseDouble(columns[3].trim());
+
+                    turbineMap.computeIfAbsent(turbineId, id -> new TurbineTracker(id))
+                            .addReading(temperature, vibration);
+
+                } catch (NumberFormatException e) {
+                    System.err.println("Skipping line " + lineNumber + " (bad number): " + line);
+                }
+            }
+
+            System.out.println("=== FAILING TURBINES REQUIRING MAINTENANCE ===");
+            for (TurbineTracker tracker : turbineMap.values()) {
+                if (tracker.isFailing()) {
+                    System.out.printf("Turbine ID: %s | Avg Temp: %.2f°C | Max Vib: %.2f mm/s%n",
+                            tracker.turbineId, tracker.getAverageTemperature(), tracker.maxVibration);
+                }
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    // Nested tracking object to aggregate streaming stats efficiently in memory
+    private static class TurbineTracker {
+        String turbineId;
+        double totalTemperature = 0.0;
+        int readingCount = 0;
+        double maxVibration = 0.0;
+
+        public TurbineTracker(String turbineId) {
+            this.turbineId = turbineId;
+        }
+
+        public void addReading(double temperature, double vibration) {
+            this.totalTemperature += temperature;
+            this.readingCount++;
+            if (vibration > this.maxVibration) {
+                this.maxVibration = vibration;
+            }
+        }
+
+        public double getAverageTemperature() {
+            return readingCount == 0 ? 0.0 : totalTemperature / readingCount;
+        }
+
+        public boolean isFailing() {
+            return getAverageTemperature() > 85.0 || maxVibration > 15.0;
+        }
+    }
+}
