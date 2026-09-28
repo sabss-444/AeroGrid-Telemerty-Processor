@@ -1,10 +1,10 @@
-AeroGrid Telemetry Processor
+# AeroGrid Telemetry Processor
 
 A Python-based telemetry processing project completed as part of the Bright Network Engineering & Technology Virtual Internship.
 
 The project focuses on processing engineering telemetry data and demonstrating how a structured software system can be designed to handle, validate, and analyse incoming telemetry information.
 
-Overview
+# Overview
 
 The AeroGrid Telemetry Processor was developed to simulate a telemetry-processing system for an engineering environment.
 
@@ -12,7 +12,7 @@ The project involved designing the system architecture, implementing the telemet
 
 The project demonstrates the use of software engineering principles to process engineering data in a structured and maintainable way.
 
-Features
+# Features
 
 * Processes telemetry data using Python
 * Implements telemetry-processing logic
@@ -23,26 +23,26 @@ Features
 * Engineering report documenting the design and implementation
 * Version-controlled using Git and GitHub
 
-Technologies Used
+# Technologies Used
 
 * Python — telemetry processing and application logic
 * Docker — application containerisation
 * Git & GitHub — version control and project management
 * Software Architecture — system design and component organisation
 
-Project Structure
+# Project Structure
 
 AeroGrid-Telemetry-Processor/
 │
-├── TelemetryProcessor/
-│   └── ...
+| TelemetryProcessor/
+│    |_ ...
 │
-├── Dockerfile
-├── Engineering Report
-├── Architecture Diagram
-└── README.md
+| Dockerfile
+| Engineering Report
+| Architecture Diagram
+| README.md
 
-System Architecture
+# System Architecture
 
 The project was designed around a structured telemetry-processing pipeline.
 
