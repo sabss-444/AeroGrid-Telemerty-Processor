@@ -47,19 +47,13 @@ AeroGrid-Telemetry-Processor/
 The project was designed around a structured telemetry-processing pipeline.
 
 Telemetry Data
-      │
-      ▼
-┌─────────────────────┐
-│ Telemetry Processor │
-└─────────────────────┘
-      │
-      ▼
+      |
+ Telemetry Processor 
+      |
 Data Validation
-      │
-      ▼
+      |
 Data Processing
-      │
-      ▼
+      |
 Processed Telemetry
 
 The architecture separates the different stages of the processing workflow, making the system easier to understand, test, and extend.
