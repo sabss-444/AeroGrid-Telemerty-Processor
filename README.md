@@ -1,6 +1,6 @@
 # AeroGrid Telemetry Processor
 
-A Python-based telemetry processing project completed as part of the Bright Network Engineering & Technology Virtual Internship.
+A JAVA-based telemetry processing project completed as part of the Bright Network Engineering & Technology Virtual Internship.
 
 The project focuses on processing engineering telemetry data and demonstrating how a structured software system can be designed to handle, validate, and analyse incoming telemetry information.
 
